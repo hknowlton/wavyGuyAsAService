@@ -9,8 +9,12 @@ const app = new App({
   appToken: process.env.SLACK_APP_TOKEN
 });
 
+app.message('help', async ({ message, say }) => {
+  await say('Type "new" to get started');
+});
+
 // Listens to incoming messages that contain "hello"
-app.message('hello', async ({ message, say }) => {
+app.message('new', async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
   await say({
     blocks: [
