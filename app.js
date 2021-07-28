@@ -44,8 +44,8 @@ app.message('hello', async ({ message, say }) => {
                 },
                 value: 'success'
               }
-            ]
-            // action_id: 'actionId-0'
+            ],
+            action_id: 'ghost_action'
           }
         ]
       },
@@ -87,15 +87,15 @@ app.message('hello', async ({ message, say }) => {
               },
               value: 'Annotations'
             }
-          ]
-          // action_id: 'static_select-action'
+          ],
+          action_id: 'ghost_action'
         }
       },
       {
         type: 'input',
         element: {
-          type: 'plain_text_input'
-          // action_id: 'plain_text_input-action'
+          type: 'plain_text_input',
+          action_id: 'ghost_action'
         },
         label: {
           type: 'plain_text',
@@ -120,6 +120,11 @@ app.message('hello', async ({ message, say }) => {
       }
     ]
   });
+});
+
+app.action('ghost_action', async ({ body, ack, say }) => {
+  // gets rid of the loading errors in the slack UI
+  await ack();
 });
 
 app.action('submit_joke_action', async ({ body, ack, say }) => {
