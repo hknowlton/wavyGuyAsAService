@@ -16,100 +16,9 @@ app.message('hello', async ({ message, say }) => {
     blocks: [
       {
         type: 'section',
-        fields: [
-          {
-            type: 'plain_text',
-            text: 'Hello! What team would you like to make a saying for?',
-            emoji: true
-          }
-        ]
-      },
-      {
-        type: 'divider'
-      },
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: 'Team name'
-        },
-        accessory: {
-          type: 'static_select',
-          placeholder: {
-            type: 'plain_text',
-            text: 'Select a user',
-            emoji: true
-          },
-          options: [
-            {
-              text: {
-                type: 'plain_text',
-                emoji: true,
-                text: 'DMP'
-              },
-              value: 'value-0'
-            },
-            {
-              text: {
-                type: 'plain_text',
-                emoji: true,
-                text: 'Vortal'
-              },
-              value: 'value-1'
-            },
-            {
-              text: {
-                type: 'plain_text',
-                emoji: true,
-                text: 'Annotations'
-              },
-              value: 'value-2'
-            }
-          ],
-          action_id: 'team-select-action'
-        }
-      }
-    ]
-  });
-});
-
-app.action('team-select-action', async ({ body, ack, say }) => {
-  // Acknowledge the action
-  await ack();
-
-  await say(
-    `Nice team, I have always wanted to be on ${body.actions[0].selected_option.text.text}!`
-  );
-
-  await say({
-    blocks: [
-      {
-        dispatch_action: true,
-        type: 'input',
-        element: {
-          type: 'plain_text_input',
-          action_id: 'new_saying-action'
-        },
-        label: {
-          type: 'plain_text',
-          text: `Enter a new saying for ${body.actions[0].selected_option.text.text}`,
-          emoji: true
-        }
-      }
-    ]
-  });
-});
-
-app.action('new_saying-action', async ({ body, ack, say }) => {
-  await ack();
-  await say(`Nice joke, I think ${body.actions[0].value} will really slap`);
-  await say({
-    blocks: [
-      {
-        type: 'section',
         text: {
           type: 'plain_text',
-          text: 'Is this an error or success message?',
+          text: 'What is the sentiment of this saying?',
           emoji: true
         }
       },
@@ -135,8 +44,77 @@ app.action('new_saying-action', async ({ body, ack, say }) => {
                 },
                 value: 'success'
               }
-            ],
-            action_id: 'error_or_success'
+            ]
+            // action_id: 'actionId-0'
+          }
+        ]
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: 'Pick an item from the dropdown list'
+        },
+        accessory: {
+          type: 'static_select',
+          placeholder: {
+            type: 'plain_text',
+            text: 'Select an item',
+            emoji: true
+          },
+          options: [
+            {
+              text: {
+                type: 'plain_text',
+                emoji: true,
+                text: 'DMP'
+              },
+              value: 'DMP'
+            },
+            {
+              text: {
+                type: 'plain_text',
+                emoji: true,
+                text: 'Vortal'
+              },
+              value: 'Vortal'
+            },
+            {
+              text: {
+                type: 'plain_text',
+                emoji: true,
+                text: 'Annotations'
+              },
+              value: 'Annotations'
+            }
+          ]
+          // action_id: 'static_select-action'
+        }
+      },
+      {
+        type: 'input',
+        element: {
+          type: 'plain_text_input'
+          // action_id: 'plain_text_input-action'
+        },
+        label: {
+          type: 'plain_text',
+          text: 'Your saying',
+          emoji: true
+        }
+      },
+      {
+        type: 'actions',
+        elements: [
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: 'Submit saying',
+              emoji: true
+            },
+            value: 'click_me_123',
+            action_id: 'submit_joke_action'
           }
         ]
       }
@@ -144,16 +122,28 @@ app.action('new_saying-action', async ({ body, ack, say }) => {
   });
 });
 
-app.action('error_or_success', async ({ body, ack, say }) => {
+app.action('submit_joke_action', async ({ body, ack, say }) => {
   await ack();
-  await say('Great! Sending this off to Wavy HQ now.');
-});
 
-// app.action('new_saying-action', async ({ body, ack, say }) => {
-//   // Acknowledge the action
-//   await ack();
-//   await say(`Nice joke, I think ${body.actions[0].value} will really slap`);
-// });
+  const responses = Object.values(body.state.values);
+
+  responses.forEach(item => {
+    const res = Object.values(item)[0];
+
+    switch (res.type) {
+      case 'radio_buttons':
+        console.log(res.selected_option.value);
+        break;
+      case 'static_select':
+        console.log(res.selected_option.value);
+        break;
+      default:
+        console.log(res.value);
+        break;
+    }
+  });
+  await say('Request received! Sending off to Wavy HQ now.');
+});
 
 (async () => {
   // Start your app
