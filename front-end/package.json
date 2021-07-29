@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start-server": "node ./back-end/app.js",
-    "start-react": "cd ./front-end && react-scripts start",
+    "start-react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

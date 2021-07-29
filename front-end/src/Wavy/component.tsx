@@ -10,7 +10,6 @@ export type WavyPosition =
 
 export const defaultProps = {
   type: 'success',
-  text: '',
   position: 'bottom-right' as WavyPosition,
   showFor: 5000,
   closeWavy: () => {},
@@ -18,11 +17,17 @@ export const defaultProps = {
   styles: ''
 };
 
-export type WavyOptions = typeof defaultProps;
+export type WavyOptions = {
+  type: 'success' | 'failure';
+  position: WavyPosition;
+  showFor: number;
+  closeWavy: () => void;
+  animationClass: string;
+  styles: {};
+};
 
 const Wavy = ({
   type,
-  text,
   position,
   showFor,
   closeWavy,
@@ -42,6 +47,11 @@ const Wavy = ({
     };
   }, []);
 
+  const sayings = localStorage.getItem('sayings')
+    ? // @ts-ignore
+      JSON.parse(localStorage.getItem('sayings' || ''))
+    : [];
+  console.log('sayings from storage', sayings);
   return (
     <WavyWrapper
       type={type}
@@ -49,7 +59,8 @@ const Wavy = ({
       position={position}
       styles={styles}
     >
-      <WavyText>{text}</WavyText>
+      <WavyText>{sayings.Success[1] || 'Woohooo!'}</WavyText>
+      {/* <WavyText>hi HENLO HEY</WavyText> */}
       <CloseButton onClick={closeWavy}>
         <CloseIcon />
       </CloseButton>

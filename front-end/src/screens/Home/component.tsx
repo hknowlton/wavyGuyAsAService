@@ -10,8 +10,7 @@ export function Home() {
   useEffect(() => {
     wavySuccess('hello');
     WavyEvents.show({
-      type: 'error',
-      text: 'issa fail',
+      type: 'failure',
       position: 'top-right'
     });
   }, []);

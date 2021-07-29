@@ -6,19 +6,6 @@ type WavyStyles = Pick<WavyOptions, 'type' | 'position' | 'styles'>;
 
 const MARGIN = '15px';
 
-export const getTypeColor = (props: WavyStyles) => {
-  const typeColors = {
-    error: theme.carvana.red.primary,
-    warning: theme.carvana.yellow.primary,
-    success: theme.carvana.green.primary,
-    info: theme.carvana.blue.primary
-  };
-  return (
-    typeColors[props.type as keyof typeof typeColors] ||
-    theme.carvana.blue.primary
-  );
-};
-
 export const wavyPosition = ({ position }: WavyStyles) => {
   const positions = ['bottom', 'left', 'top', 'right'];
   return positions
@@ -52,7 +39,6 @@ const wavySlideOnAnimation = css`
 ` as any;
 
 export const WavyWrapper = styled.div<WavyStyles>`
-  background: ${getTypeColor};
   position: fixed;
   padding: 15px;
   padding-top: 17px;
@@ -69,8 +55,6 @@ export const WavyWrapper = styled.div<WavyStyles>`
   ${wavyPosition}
   ${wavySlideOnAnimation};
   transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
-  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 15px 0px rgba(0, 0, 0, 0.12);
 
   &.on-leave {
     opacity: 0;
@@ -81,6 +65,7 @@ export const WavyWrapper = styled.div<WavyStyles>`
 `;
 
 export const WavyText = styled.div`
+  color: black;
   margin: 0 ${MARGIN};
 `;
 

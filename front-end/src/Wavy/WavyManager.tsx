@@ -14,6 +14,15 @@ export class WavyManager extends PureComponent<{}, WavyGuyState> {
   };
 
   componentDidMount() {
+    fetch(`https://2b0ca9aef993.ngrok.io/teams/DMP/sayings`, {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log('res', result);
+        localStorage.setItem('sayings', JSON.stringify(result));
+      });
+
     WavyEvents.mount(this);
   }
 
@@ -29,6 +38,7 @@ export class WavyManager extends PureComponent<{}, WavyGuyState> {
 
     const { wavyOptions: existingWavyOptions } = this.state;
     this.setState({
+      // @ts-ignore
       wavyOptions: {
         ...defaultProps,
         ...existingWavyOptions,
@@ -42,6 +52,7 @@ export class WavyManager extends PureComponent<{}, WavyGuyState> {
     const currentOptions = wavyOptions || defaultProps;
     this.setState(
       {
+        // @ts-ignore
         wavyOptions: {
           ...currentOptions,
           animationClass: 'on-leave'

@@ -155,7 +155,7 @@ app.action('submit_joke_action', async ({ body, ack, say }) => {
     }
   });
 
-  fetch(`https://329482b69d82.ngrok.io/teams/${reqBody.TeamId}/sayings`, {
+  fetch(`${process.env.API_URL}/teams/${reqBody.TeamId}/sayings`, {
     method: 'post',
     body: JSON.stringify(reqBody),
     headers: { 'Content-Type': 'application/json' }
