@@ -1,4 +1,5 @@
 const { App } = require('@slack/bolt');
+const fetch = require('node-fetch');
 require('dotenv').config();
 
 // Initializes your app with your bot token and signing secret
@@ -38,7 +39,7 @@ app.message('new', async ({ message, say }) => {
                   text: 'error',
                   emoji: true
                 },
-                value: 'error'
+                value: '2'
               },
               {
                 text: {
@@ -46,7 +47,7 @@ app.message('new', async ({ message, say }) => {
                   text: 'success',
                   emoji: true
                 },
-                value: 'success'
+                value: '1'
               }
             ],
             action_id: 'ghost_action'
@@ -73,7 +74,8 @@ app.message('new', async ({ message, say }) => {
                 emoji: true,
                 text: 'DMP'
               },
-              value: 'DMP'
+              // TODO - get this value from the backend
+              value: '1'
             },
             {
               text: {
@@ -81,7 +83,7 @@ app.message('new', async ({ message, say }) => {
                 emoji: true,
                 text: 'Vortal'
               },
-              value: 'Vortal'
+              value: '2'
             },
             {
               text: {
@@ -89,7 +91,7 @@ app.message('new', async ({ message, say }) => {
                 emoji: true,
                 text: 'Annotations'
               },
-              value: 'Annotations'
+              value: '3'
             }
           ],
           action_id: 'ghost_action'
@@ -136,21 +138,31 @@ app.action('submit_joke_action', async ({ body, ack, say }) => {
 
   const responses = Object.values(body.state.values);
 
+  const reqBody = { TeamId: 1, Type: 1, Message: '' };
   responses.forEach(item => {
     const res = Object.values(item)[0];
 
     switch (res.type) {
       case 'radio_buttons':
-        console.log(res.selected_option.value);
+        reqBody.Type = res.selected_option.value;
         break;
       case 'static_select':
-        console.log(res.selected_option.value);
+        reqBody.TeamId = res.selected_option.value;
         break;
       default:
-        console.log(res.value);
+        reqBody.Message = res.value;
         break;
     }
   });
+
+  fetch(`https://329482b69d82.ngrok.io/teams/${reqBody.TeamId}/sayings`, {
+    method: 'post',
+    body: JSON.stringify(reqBody),
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(json => console.log(json));
+
   await say('Request received! Sending off to Wavy HQ now.');
 });
 
