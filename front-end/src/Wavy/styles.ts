@@ -46,8 +46,14 @@ export const WavyWrapper = styled.div<WavyStyles>`
 export const WavyText = styled.div`
   color: black;
   position: absolute;
-  top: 50px;
-  left: 50px;
+  top: 36px;
+  left: 33px;
+  height: 100px;
+  width: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
 `;
 
 export const CloseButton = styled.div`
