@@ -1,7 +1,7 @@
 {
-  "name": "wavyGuy",
+  "name": "wavy_guy_as_a_service",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@slack/bolt": "^3.5.0",
     "@testing-library/jest-dom": "^5.11.4",
