@@ -36,7 +36,7 @@ app.message('new', async ({ message, say }) => {
               {
                 text: {
                   type: 'plain_text',
-                  text: 'error',
+                  text: 'Failure',
                   emoji: true
                 },
                 value: '2'
@@ -44,7 +44,7 @@ app.message('new', async ({ message, say }) => {
               {
                 text: {
                   type: 'plain_text',
-                  text: 'success',
+                  text: 'Success',
                   emoji: true
                 },
                 value: '1'

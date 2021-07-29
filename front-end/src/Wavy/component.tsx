@@ -9,7 +9,7 @@ export type WavyPosition =
   | 'bottom-right';
 
 export const defaultProps = {
-  type: 'success',
+  type: 'Success',
   position: 'bottom-right' as WavyPosition,
   showFor: 5000,
   closeWavy: () => {},
@@ -18,7 +18,7 @@ export const defaultProps = {
 };
 
 export type WavyOptions = {
-  type: 'success' | 'failure';
+  type: 'Success' | 'Failure';
   position: WavyPosition;
   showFor: number;
   closeWavy: () => void;
@@ -52,6 +52,7 @@ const Wavy = ({
       JSON.parse(localStorage.getItem('sayings' || ''))
     : [];
   console.log('sayings from storage', sayings);
+  const sayingsArray = sayings[type];
   return (
     <WavyWrapper
       type={type}
@@ -59,12 +60,14 @@ const Wavy = ({
       position={position}
       styles={styles}
     >
-      <WavyText>{sayings.Success[1] || 'Woohooo!'}</WavyText>
-      {/* <WavyText>hi HENLO HEY</WavyText> */}
+      <WavyText>
+        {sayingsArray[Math.floor(Math.random() * sayingsArray.length)] ||
+          'Woohooo!'}
+      </WavyText>
       <CloseButton onClick={closeWavy}>
         <CloseIcon />
       </CloseButton>
-      <img src="/wavy-unscreen.gif" />
+      <img src="/25-pm-unscreen.gif" />
     </WavyWrapper>
   );
 };

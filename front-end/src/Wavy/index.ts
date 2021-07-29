@@ -1,14 +1,14 @@
 import { WavyEvents } from './WavyEvents';
 
 // do we want to expose these or just let users set them up??
-export function wavySuccess(text: string) {
+export function wavySuccess() {
   WavyEvents.show({
-    type: 'success'
+    type: 'Success'
   });
 }
 
-export function wavyError(text: string) {
+export function wavyError() {
   WavyEvents.show({
-    type: 'failure'
+    type: 'Failure'
   });
 }

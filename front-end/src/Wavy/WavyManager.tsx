@@ -14,7 +14,7 @@ export class WavyManager extends PureComponent<{}, WavyGuyState> {
   };
 
   componentDidMount() {
-    fetch(`https://2b0ca9aef993.ngrok.io/teams/DMP/sayings`, {
+    fetch(`https://406f096d8e5a.ngrok.io/teams/DMP/sayings`, {
       method: 'GET'
     })
       .then(response => response.json())
