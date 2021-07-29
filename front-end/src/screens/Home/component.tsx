@@ -9,14 +9,12 @@ import { Greeting } from './styles';
 export function Home() {
   useEffect(() => {
     WavyEvents.show({
-      type: 'Failure',
-      position: 'top-right'
+      type: 'Failure'
     });
   }, []);
   return (
     <Greeting>
       <WavyManager />
-      woot
       <button onClick={() => wavySuccess()}> click me </button>
     </Greeting>
   );
