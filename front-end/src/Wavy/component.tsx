@@ -34,16 +34,16 @@ const Wavy = ({
 }: WavyOptions) => {
   let wavyTimeout: NodeJS.Timeout;
 
-  // useEffect(() => {
-  //   if (showFor) {
-  //     wavyTimeout = setTimeout(() => {
-  //       closeWavy();
-  //     }, showFor);
-  //   }
-  //   return () => {
-  //     clearTimeout(wavyTimeout);
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (showFor) {
+      wavyTimeout = setTimeout(() => {
+        closeWavy();
+      }, showFor);
+    }
+    return () => {
+      clearTimeout(wavyTimeout);
+    };
+  }, []);
 
   const sayings = localStorage.getItem('sayings')
     ? // @ts-ignore

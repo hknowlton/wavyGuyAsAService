@@ -4,13 +4,15 @@ import Wavy, { WavyOptions, defaultProps } from './component';
 
 type WavyGuyState = {
   wavyOptions: WavyOptions | null;
+  showWavy: boolean;
 };
 
 export class WavyManager extends PureComponent<{}, WavyGuyState> {
   containerTimeout?: NodeJS.Timeout;
 
   state: WavyGuyState = {
-    wavyOptions: null
+    wavyOptions: null,
+    showWavy: false
   };
 
   componentDidMount() {
@@ -31,7 +33,18 @@ export class WavyManager extends PureComponent<{}, WavyGuyState> {
     clearTimeout(this.containerTimeout);
   }
 
+  shouldShowWavy = () => {
+    const randomNumber = Math.floor(Math.random() * 5);
+    if (randomNumber === 2) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   showWavy = (wavyOptions: Partial<WavyOptions>) => {
+    // in typical use, we would only want to show wavy at random intervals
+    // the this.shouldShowWavy() method is for that, but we will not implement it here for demo purposes
     if (this.containerTimeout) {
       clearTimeout(this.containerTimeout);
     }
